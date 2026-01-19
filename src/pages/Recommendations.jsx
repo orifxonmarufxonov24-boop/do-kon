@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { FaRobot, FaLightbulb, FaCheckCircle, FaArrowRight } from 'react-icons/fa';
 import { Button } from '../components/ui/Button';
 
 export default function Recommendations() {
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [recommendations, setRecommendations] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -98,7 +100,12 @@ export default function Recommendations() {
                                 )}
                             </div>
 
-                            <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2 group-hover:bg-white/10">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="hidden md:flex items-center gap-2 group-hover:bg-white/10"
+                                onClick={() => navigate('/admin')}
+                            >
                                 Bajarish <FaArrowRight />
                             </Button>
                         </div>

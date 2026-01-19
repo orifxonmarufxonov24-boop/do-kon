@@ -18,13 +18,24 @@ export default function Layout() {
                     </span>
                 </Link>
 
-                <div className="hidden md:flex items-center gap-6">
-                    <Link to="/statistika" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">Statistika</Link>
-                    <Link to="/ai-tavsiyalar" className="text-sm font-medium text-gray-400 hover:text-neon-blue transition-colors relative group">
-                        AI Tavsiyalar
-                        <span className="absolute -top-1 -right-2 w-2 h-2 bg-neon-blue rounded-full animate-pulse" />
-                    </Link>
-                </div>
+                {currentUser && (
+                    <div className="hidden md:flex items-center gap-4">
+                        <Link to="/statistika">
+                            <Button variant="secondary" className="border-neon-blue/30 hover:border-neon-blue hover:shadow-neon-blue/50">
+                                <span className="flex items-center gap-2">
+                                    📊 Statistika
+                                </span>
+                            </Button>
+                        </Link>
+                        <Link to="/ai-tavsiyalar">
+                            <Button variant="primary" className="bg-gradient-to-r from-neon-blue to-purple-600 border-none shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50">
+                                <span className="flex items-center gap-2">
+                                    ✨ AI Tavsiyalar
+                                </span>
+                            </Button>
+                        </Link>
+                    </div>
+                )}
 
                 <div className="flex items-center gap-4">
                     {currentUser ? (
