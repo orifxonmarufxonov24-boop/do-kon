@@ -186,8 +186,8 @@ export default function Home() {
                             </div>
                             <h3 className="text-xl font-bold text-white mb-2">Qo'ng'iroq Qiling</h3>
                             <p className="text-gray-400 mb-4">Har kuni 09:00 - 18:00</p>
-                            <a href="tel:+998901234567" className="text-2xl font-mono font-bold text-neon-blue group-hover:scale-105 transition-transform block">
-                                +998 90 123 45 67
+                            <a href="tel:+998932851406" className="text-2xl font-mono font-bold text-neon-blue group-hover:scale-105 transition-transform block">
+                                +998 93 285 14 06
                             </a>
                         </div>
                     </div>
@@ -201,8 +201,8 @@ export default function Home() {
                             </div>
                             <h3 className="text-xl font-bold text-white mb-2">Telegram</h3>
                             <p className="text-gray-400 mb-4">Tezkor javob oling</p>
-                            <a href="https://t.me/admin" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold text-neon-purple group-hover:scale-105 transition-transform block">
-                                @Admin
+                            <a href="https://t.me/Gravit_call" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold text-neon-purple group-hover:scale-105 transition-transform block">
+                                @Gravit_call
                             </a>
                         </div>
                     </div>
