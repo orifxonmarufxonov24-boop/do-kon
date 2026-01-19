@@ -10,11 +10,9 @@ export default function Layout() {
         <div className="min-h-screen bg-dark-bg text-white font-sans overflow-x-hidden">
             <nav className="glass sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
                 <Link to="/" className="flex items-center gap-2 group">
-                    <div className="bg-neon-blue/20 p-2 rounded-lg group-hover:bg-neon-blue/30 transition-colors">
-                        <FaBoxes className="text-neon-blue text-2xl" />
-                    </div>
+                    <img src="/logo.png" alt="Gravit Logo" className="w-10 h-10 object-contain group-hover:scale-110 transition-transform" />
                     <span className="text-xl font-bold tracking-tight">
-                        Ozodbek<span className="text-neon-blue">Santehnika</span>
+                        Gravit<span className="text-neon-blue">Santehnika</span>
                     </span>
                 </Link>
 
@@ -54,7 +52,7 @@ export default function Layout() {
             </main>
 
             <footer className="border-t border-white/10 py-8 text-center text-gray-500 text-sm">
-                <p>&copy; {new Date().getFullYear()} Ozodbek Santehnika. Barcha huquqlar himoyalangan.</p>
+                <p>&copy; {new Date().getFullYear()} Gravit Santehnika. Barcha huquqlar himoyalangan.</p>
                 <p className="mt-2 text-xs opacity-50">
                     Created by <a href="https://t.me/Orifxon_05" target="_blank" rel="noopener noreferrer" className="text-neon-blue font-bold hover:text-white transition-colors cursor-pointer">Orifxon</a>
                 </p>

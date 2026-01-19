@@ -63,9 +63,9 @@ export default function Home() {
                 <motion.h1
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white via-neon-blue to-neon-purple tracking-tight pb-2"
+                    className="text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-500 tracking-tight pb-2"
                 >
-                    PREMIUM SANTEHNIKA
+                    GRAVIT SANTEHNIKA
                 </motion.h1>
                 <p className="text-gray-400 max-w-lg mx-auto">
                     Bizning eksklyuziv zamonaviy santehnika to'plamimizni ko'ring.
