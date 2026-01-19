@@ -10,7 +10,7 @@ export default function Layout() {
         <div className="min-h-screen bg-dark-bg text-white font-sans overflow-x-hidden">
             <nav className="glass sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
                 <Link to="/" className="flex items-center gap-2 group">
-                    <img src="/logo.png" alt="Gravit Logo" className="w-10 h-10 object-contain group-hover:scale-110 transition-transform" />
+                    <img src="/logo.png" alt="Gravit Logo" className="w-12 h-12 object-contain group-hover:scale-110 transition-transform mix-blend-screen" />
                     <span className="text-xl font-bold tracking-tight">
                         Gravit<span className="text-neon-blue">Santehnika</span>
                     </span>
