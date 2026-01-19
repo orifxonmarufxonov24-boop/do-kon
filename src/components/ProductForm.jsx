@@ -34,8 +34,8 @@ export default function ProductForm({ onClose, showSuccess, initialData = null }
                     const canvas = document.createElement('canvas');
                     let width = img.width;
                     let height = img.height;
-                    // Resize to max 600px to keep base64 string size manageable for Firestore
-                    const MAX_SIZE = 600;
+                    // Resize to max 1000px (High Quality but safe for Firestore)
+                    const MAX_SIZE = 1000;
                     if (width > height) {
                         if (width > MAX_SIZE) {
                             height *= MAX_SIZE / width;
@@ -51,7 +51,7 @@ export default function ProductForm({ onClose, showSuccess, initialData = null }
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    resolve(canvas.toDataURL('image/jpeg', 0.7)); // Compress to jpg 70%
+                    resolve(canvas.toDataURL('image/jpeg', 0.8)); // Quality 80%
                 };
                 img.onerror = (err) => reject(err);
             };

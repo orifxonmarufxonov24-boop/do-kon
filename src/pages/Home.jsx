@@ -5,6 +5,7 @@ import { Input, Select } from '../components/ui/Input';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import Modal from '../components/ui/Modal';
+import Lightbox from '../components/ui/Lightbox';
 import { FaSearch, FaFilter, FaBoxOpen, FaPhoneAlt, FaTelegramPlane } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -15,6 +16,7 @@ export default function Home() {
     const [activeCategory, setActiveCategory] = useState('Barchasi');
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [viewingImage, setViewingImage] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -128,7 +130,11 @@ export default function Home() {
                                             <img
                                                 src={product.images[0]}
                                                 alt={product.name}
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 cursor-zoom-in"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setViewingImage(product.images[0]);
+                                                }}
                                             />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center bg-gray-800 text-gray-600">
@@ -264,6 +270,14 @@ export default function Home() {
                     </div>
                 )}
             </Modal>
+
+            {/* Image Ligthbox */}
+            {viewingImage && (
+                <Lightbox
+                    src={viewingImage}
+                    onClose={() => setViewingImage(null)}
+                />
+            )}
         </div>
     );
 }

@@ -4,6 +4,8 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Statistics from './pages/Statistics';
+import Recommendations from './pages/Recommendations';
 
 function ProtectedRoute({ children }) {
     const { currentUser } = useAuth();
@@ -28,6 +30,8 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Layout />}>
                         <Route index element={<Home />} />
+                        <Route path="statistika" element={<Statistics />} />
+                        <Route path="ai-tavsiyalar" element={<Recommendations />} />
 
                         <Route
                             path="login"
