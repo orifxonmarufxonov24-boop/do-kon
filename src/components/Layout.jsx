@@ -1,7 +1,7 @@
 import { Outlet, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Button } from './ui/Button';
-import { FaBoxes } from 'react-icons/fa';
+import logoImg from '../assets/logo.png';
 
 export default function Layout() {
     const { currentUser, logout } = useAuth();
@@ -10,7 +10,7 @@ export default function Layout() {
         <div className="min-h-screen bg-dark-bg text-white font-sans overflow-x-hidden">
             <nav className="glass sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
                 <Link to="/" className="flex items-center gap-2 group">
-                    <img src="/logo.png" alt="Gravit Logo" className="w-12 h-12 object-contain group-hover:scale-110 transition-transform mix-blend-screen" />
+                    <img src={logoImg} alt="Gravit Logo" className="w-16 h-16 object-contain group-hover:scale-110 transition-transform mix-blend-screen" />
                     <span className="text-xl font-bold tracking-tight">
                         Gravit<span className="text-neon-blue">Santehnika</span>
                     </span>
