@@ -5,7 +5,7 @@ import { Input, Select } from '../components/ui/Input';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import Modal from '../components/ui/Modal';
-import { FaSearch, FaFilter, FaBoxOpen } from 'react-icons/fa';
+import { FaSearch, FaFilter, FaBoxOpen, FaPhoneAlt, FaTelegramPlane } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ALL_CATEGORIES = ['Barchasi', 'Unitaz', 'Vanna', 'Rakovina', 'Ko\'zgu', 'Jo\'mrak', 'Dush', 'Mebel', 'Aksessuarlar'];
@@ -35,7 +35,23 @@ export default function Home() {
 
     const filteredProducts = products.filter(p => {
         const matchesCategory = activeCategory === 'Barchasi' || p.category === activeCategory;
-        const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
+
+        if (!searchTerm.trim()) return matchesCategory;
+
+        const searchLower = searchTerm.toLowerCase();
+        const keywords = searchLower.split(/\s+/).filter(k => k.length > 0);
+
+        // Combine all searchable text
+        const productText = `
+            ${p.name} 
+            ${p.category} 
+            ${p.color || ''} 
+            ${Array.isArray(p.sizes) ? p.sizes.join(' ') : p.sizes}
+        `.toLowerCase();
+
+        // Check if ALL keywords are present in the product text
+        const matchesSearch = keywords.every(k => productText.includes(k));
+
         return matchesCategory && matchesSearch;
     });
 
@@ -74,8 +90,8 @@ export default function Home() {
                                 key={cat}
                                 onClick={() => setActiveCategory(cat)}
                                 className={`whitespace-nowrap px-6 py-2 rounded-full border transition-all ${activeCategory === cat
-                                        ? 'bg-neon-blue text-black border-neon-blue font-bold shadow-neon-blue'
-                                        : 'bg-transparent text-gray-400 border-white/10 hover:border-white/30'
+                                    ? 'bg-neon-blue text-black border-neon-blue font-bold shadow-neon-blue'
+                                    : 'bg-transparent text-gray-400 border-white/10 hover:border-white/30'
                                     }`}
                             >
                                 {cat}
@@ -121,8 +137,8 @@ export default function Home() {
                                         )}
                                         <div className="absolute top-2 right-2">
                                             <span className={`px-3 py-1 rounded-full text-xs font-bold shadow-lg ${product.quantity > 0
-                                                    ? 'bg-green-500 text-white'
-                                                    : 'bg-red-500 text-white'
+                                                ? 'bg-green-500 text-white'
+                                                : 'bg-red-500 text-white'
                                                 }`}>
                                                 {product.quantity > 0 ? 'SOTUVDA' : 'QOLMAGAN'}
                                             </span>
@@ -153,6 +169,45 @@ export default function Home() {
                     </AnimatePresence>
                 </div>
             )}
+
+            {/* Contact Section */}
+            <div className="border-t border-white/10 pt-16 pb-8">
+                <h2 className="text-3xl font-black text-center mb-10 text-white">
+                    BIZ BILAN <span className="text-neon-blue">ALOQA</span>
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto px-4">
+                    {/* Phone Card */}
+                    <div className="group relative bg-dark-bg border border-white/10 rounded-2xl p-8 hover:border-neon-blue/50 transition-all duration-300 overflow-hidden hover:shadow-neon-blue cursor-pointer">
+                        <div className="absolute inset-0 bg-gradient-to-br from-neon-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="relative z-10 flex flex-col items-center text-center">
+                            <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4 group-hover:bg-neon-blue/20 transition-colors text-white group-hover:text-neon-blue">
+                                <FaPhoneAlt className="text-2xl" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-2">Qo'ng'iroq Qiling</h3>
+                            <p className="text-gray-400 mb-4">Har kuni 09:00 - 18:00</p>
+                            <a href="tel:+998901234567" className="text-2xl font-mono font-bold text-neon-blue group-hover:scale-105 transition-transform block">
+                                +998 90 123 45 67
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Telegram Card */}
+                    <div className="group relative bg-dark-bg border border-white/10 rounded-2xl p-8 hover:border-neon-purple/50 transition-all duration-300 overflow-hidden hover:shadow-neon-purple cursor-pointer">
+                        <div className="absolute inset-0 bg-gradient-to-br from-neon-purple/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="relative z-10 flex flex-col items-center text-center">
+                            <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4 group-hover:bg-neon-purple/20 transition-colors text-white group-hover:text-neon-purple">
+                                <FaTelegramPlane className="text-2xl" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-2">Telegram</h3>
+                            <p className="text-gray-400 mb-4">Tezkor javob oling</p>
+                            <a href="https://t.me/admin" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold text-neon-purple group-hover:scale-105 transition-transform block">
+                                @Admin
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {/* Product Detail Modal */}
             <Modal

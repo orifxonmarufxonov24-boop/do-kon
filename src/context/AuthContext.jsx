@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '../firebase';
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth';
 
 const AuthContext = createContext();
 
@@ -12,7 +12,8 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    function login(email, password) {
+    async function login(email, password) {
+        await setPersistence(auth, browserSessionPersistence);
         return signInWithEmailAndPassword(auth, email, password);
     }
 
