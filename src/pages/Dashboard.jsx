@@ -6,7 +6,10 @@ import { Card } from '../components/ui/Card';
 import ProductForm from '../components/ProductForm';
 import Modal from '../components/ui/Modal';
 import MapPicker from '../components/ui/MapPicker';
-import { FaPlus, FaSearch, FaEdit, FaTrash, FaExclamationTriangle, FaBox, FaEnvelope, FaStar, FaCheckDouble, FaRegStar, FaCog, FaPhoneAlt, FaTelegramPlane } from 'react-icons/fa';
+import ProductManager from '../components/dashboard/ProductManager';
+import StatisticsManager from '../components/dashboard/StatisticsManager';
+import AIRecommendations from '../components/dashboard/AIRecommendations';
+import { FaPlus, FaSearch, FaEdit, FaTrash, FaExclamationTriangle, FaBox, FaEnvelope, FaStar, FaCheckDouble, FaRegStar, FaCog, FaPhoneAlt, FaTelegramPlane, FaChartBar, FaRobot } from 'react-icons/fa';
 
 export default function Dashboard() {
     const [activeTab, setActiveTab] = useState('products');
@@ -39,11 +42,26 @@ export default function Dashboard() {
                     icon={<FaCog />}
                     label="Sozlamalar"
                 />
+                <div className="border-t border-gray-200 dark:border-white/10 my-1 mx-4"></div>
+                <TabButton
+                    active={activeTab === 'statistics'}
+                    onClick={() => setActiveTab('statistics')}
+                    icon={<FaChartBar />}
+                    label="Statistika"
+                />
+                <TabButton
+                    active={activeTab === 'ai'}
+                    onClick={() => setActiveTab('ai')}
+                    icon={<FaRobot />}
+                    label="AI Tavsiya"
+                />
             </aside>
 
             {/* Main Content */}
             <main className="flex-1 bg-white/80 dark:bg-dark-card/30 rounded-2xl p-6 border border-gray-200 dark:border-white/5 shadow-xl dark:shadow-none transition-colors duration-300">
                 {activeTab === 'products' && <ProductManager />}
+                {activeTab === 'statistics' && <StatisticsManager />}
+                {activeTab === 'ai' && <AIRecommendations />}
                 {activeTab === 'messages' && <MessageManager />}
                 {activeTab === 'reviews' && <ReviewManager />}
                 {activeTab === 'settings' && <SettingsManager />}
@@ -69,94 +87,8 @@ function TabButton({ active, onClick, icon, label }) {
 
 // --- SUB-MANAGERS ---
 
-function ProductManager() {
-    const [products, setProducts] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editingProduct, setEditingProduct] = useState(null);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            setProducts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-            setLoading(false);
-        });
-        return () => unsubscribe();
-    }, []);
-
-    const handleDelete = async (id) => {
-        if (window.confirm("O'chirmoqchimisiz?")) {
-            await deleteDoc(doc(db, "products", id));
-        }
-    };
-
-    const openEditModal = (product) => {
-        setEditingProduct({ ...product, sizes: Array.isArray(product.sizes) ? product.sizes.join(', ') : product.sizes });
-        setIsModalOpen(true);
-    };
-
-    const filtered = products.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
-
-    return (
-        <div className="space-y-6">
-            <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Mahsulotlar ({products.length})</h2>
-                <Button onClick={() => { setEditingProduct(null); setIsModalOpen(true); }} size="sm">
-                    <FaPlus className="mr-2" /> Qo'shish
-                </Button>
-            </div>
-
-            <div className="relative">
-                <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                <input
-                    type="text"
-                    placeholder="Qidirish..."
-                    className="w-full bg-gray-100 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-lg pl-10 py-2 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-neon-blue transition-colors"
-                    value={searchTerm}
-                    onChange={e => setSearchTerm(e.target.value)}
-                />
-            </div>
-
-            <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-white/10">
-                <table className="w-full text-left text-sm">
-                    <thead className="bg-gray-50 dark:bg-white/5 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-white/10">
-                        <tr>
-                            <th className="p-3">Nomi</th>
-                            <th className="p-3">Kat</th>
-                            <th className="p-3">Soni</th>
-                            <th className="p-3 text-right">Amallar</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200 dark:divide-white/5 text-gray-700 dark:text-gray-300">
-                        {filtered.map(p => (
-                            <tr key={p.id} className="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
-                                <td className="p-3 flex items-center gap-3">
-                                    <img src={p.images?.[0]} className="w-8 h-8 rounded object-cover bg-gray-200 dark:bg-white/10" />
-                                    <span className="font-medium text-gray-900 dark:text-white">{p.name}</span>
-                                </td>
-                                <td className="p-3">{p.category}</td>
-                                <td className="p-3">
-                                    <span className={`px-2 py-1 rounded text-xs font-bold ${p.quantity < 3 ? 'bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-500' : 'bg-green-100 text-green-600 dark:bg-green-500/20 dark:text-green-500'}`}>
-                                        {p.quantity}
-                                    </span>
-                                </td>
-                                <td className="p-3 text-right">
-                                    <button onClick={() => openEditModal(p)} className="p-2 text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"><FaEdit /></button>
-                                    <button onClick={() => handleDelete(p.id)} className="p-2 text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"><FaTrash /></button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={editingProduct ? "Tahrirlash" : "Qo'shish"}>
-                <ProductForm onClose={() => setIsModalOpen(false)} showSuccess={(m) => alert(m)} initialData={editingProduct} />
-            </Modal>
-        </div>
-    );
-}
+// ProductManager is now imported from ../components/dashboard/ProductManager
+// See imports above
 
 function MessageManager() {
     const [chats, setChats] = useState([]);
