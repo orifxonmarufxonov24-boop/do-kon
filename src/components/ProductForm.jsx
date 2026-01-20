@@ -186,10 +186,10 @@ export default function ProductForm({ onClose, showSuccess, initialData = null }
             </div>
 
             <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-400">Mahsulot Rasmlari (Maksimal 3 ta)</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-400">Mahsulot Rasmlari (Maksimal 3 ta)</label>
                 <div className="grid grid-cols-4 gap-2 mb-2">
                     {formData.images.map((src, idx) => (
-                        <div key={idx} className="relative group aspect-square bg-black/20 rounded-lg overflow-hidden border border-white/10">
+                        <div key={idx} className="relative group aspect-square bg-gray-100 dark:bg-black/20 rounded-lg overflow-hidden border border-gray-200 dark:border-white/10">
                             <img src={src} alt="Preview" className="w-full h-full object-cover" />
                             <button
                                 type="button"
@@ -201,7 +201,7 @@ export default function ProductForm({ onClose, showSuccess, initialData = null }
                         </div>
                     ))}
                     {formData.images.length < 3 && (
-                        <label className="border-2 border-dashed border-white/20 rounded-lg aspect-square flex flex-col items-center justify-center cursor-pointer hover:border-neon-blue hover:text-neon-blue transition-colors text-gray-500">
+                        <label className="border-2 border-dashed border-gray-300 dark:border-white/20 rounded-lg aspect-square flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 dark:hover:border-neon-blue hover:text-blue-500 dark:hover:text-neon-blue transition-colors text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-transparent">
                             {loading ? (
                                 <span className="text-xs animate-pulse">Yuklanmoqda...</span>
                             ) : (

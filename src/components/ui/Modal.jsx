@@ -11,19 +11,19 @@ export default function Modal({ isOpen, onClose, title, children }) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+                        className="absolute inset-0 bg-black/50 dark:bg-black/80 backdrop-blur-sm"
                     />
                     <motion.div
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.9, opacity: 0 }}
-                        className="relative w-full max-w-2xl bg-dark-card border border-white/10 rounded-xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+                        className="relative w-full max-w-2xl bg-white dark:bg-dark-card border border-gray-200 dark:border-white/10 rounded-xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col transition-colors duration-300"
                     >
-                        <div className="p-4 border-b border-white/10 flex justify-between items-center bg-white/5">
-                            <h3 className="text-xl font-bold text-white">{title}</h3>
+                        <div className="p-4 border-b border-gray-200 dark:border-white/10 flex justify-between items-center bg-gray-50 dark:bg-white/5">
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
                             <button
                                 onClick={onClose}
-                                className="text-gray-400 hover:text-white transition-colors"
+                                className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
                             >
                                 <FaTimes size={20} />
                             </button>

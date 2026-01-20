@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { LanguageProvider } from './context/LanguageContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -26,35 +28,39 @@ function AdminRoute({ children }) {
 function App() {
     return (
         <AuthProvider>
-            <Router>
-                <Routes>
-                    <Route path="/" element={<Layout />}>
-                        <Route index element={<Home />} />
-                        <Route path="statistika" element={<Statistics />} />
-                        <Route path="ai-tavsiyalar" element={<Recommendations />} />
+            <LanguageProvider>
+                <ThemeProvider>
+                    <Router>
+                        <Routes>
+                            <Route path="/" element={<Layout />}>
+                                <Route index element={<Home />} />
+                                <Route path="statistika" element={<Statistics />} />
+                                <Route path="ai-tavsiyalar" element={<Recommendations />} />
 
-                        <Route
-                            path="login"
-                            element={
-                                <AdminRoute>
-                                    <Login />
-                                </AdminRoute>
-                            }
-                        />
+                                <Route
+                                    path="login"
+                                    element={
+                                        <AdminRoute>
+                                            <Login />
+                                        </AdminRoute>
+                                    }
+                                />
 
-                        <Route
-                            path="admin"
-                            element={
-                                <ProtectedRoute>
-                                    <Dashboard />
-                                </ProtectedRoute>
-                            }
-                        />
+                                <Route
+                                    path="admin"
+                                    element={
+                                        <ProtectedRoute>
+                                            <Dashboard />
+                                        </ProtectedRoute>
+                                    }
+                                />
 
-                        <Route path="*" element={<Navigate to="/" replace />} />
-                    </Route>
-                </Routes>
-            </Router>
+                                <Route path="*" element={<Navigate to="/" replace />} />
+                            </Route>
+                        </Routes>
+                    </Router>
+                </ThemeProvider>
+            </LanguageProvider>
         </AuthProvider>
     );
 }
