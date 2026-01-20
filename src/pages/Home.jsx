@@ -148,9 +148,22 @@ export default function Home() {
         if (!term) {
             return activeCategory === 'Barchasi' || p.category === activeCategory;
         }
-        // Global search by name or category if search term exists
-        return (p.name && p.name.toLowerCase().includes(term)) ||
-            (p.category && p.category.toLowerCase().includes(term));
+
+        // Comprehensive Search
+        const nameMatch = p.name?.toLowerCase().includes(term);
+        const categoryMatch = p.category?.toLowerCase().includes(term);
+        const colorMatch = p.color?.toLowerCase().includes(term);
+
+        let sizeMatch = false;
+        if (p.sizes) {
+            if (Array.isArray(p.sizes)) {
+                sizeMatch = p.sizes.some(s => s.toLowerCase().includes(term));
+            } else if (typeof p.sizes === 'string') {
+                sizeMatch = p.sizes.toLowerCase().includes(term);
+            }
+        }
+
+        return nameMatch || categoryMatch || colorMatch || sizeMatch;
     });
 
     const scrollToContact = () => {
