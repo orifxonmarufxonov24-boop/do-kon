@@ -144,9 +144,13 @@ export default function Home() {
     };
 
     const filteredProducts = products.filter(p => {
-        const matchesCategory = activeCategory === 'Barchasi' || p.category === activeCategory;
-        if (!searchTerm.trim()) return matchesCategory;
-        return matchesCategory && p.name.toLowerCase().includes(searchTerm.toLowerCase());
+        const term = searchTerm.toLowerCase().trim();
+        if (!term) {
+            return activeCategory === 'Barchasi' || p.category === activeCategory;
+        }
+        // Global search by name or category if search term exists
+        return (p.name && p.name.toLowerCase().includes(term)) ||
+            (p.category && p.category.toLowerCase().includes(term));
     });
 
     const scrollToContact = () => {
@@ -427,12 +431,12 @@ export default function Home() {
                         </div>
 
                         {messageMode ? (
-                            <form onSubmit={submitMessage} className="mt-4 space-y-4 border-t border-white/10 pt-4 animate-fade-in">
-                                <h4 className="font-bold text-white">Xabar qoldirish</h4>
+                            <form onSubmit={submitMessage} className="mt-4 space-y-4 border-t border-gray-200 dark:border-white/10 pt-4 animate-fade-in">
+                                <h4 className="font-bold text-gray-900 dark:text-white">Xabar qoldirish</h4>
                                 <input
                                     type="text"
                                     placeholder="Ismingiz"
-                                    className="w-full bg-black/30 border border-white/10 rounded p-3 text-white focus:border-neon-blue outline-none"
+                                    className="w-full bg-gray-100 dark:bg-black/30 border border-gray-200 dark:border-white/10 rounded p-3 text-gray-900 dark:text-white focus:border-blue-500 dark:focus:border-neon-blue outline-none placeholder-gray-500"
                                     required
                                     value={messageData.name}
                                     onChange={e => setMessageData({ ...messageData, name: e.target.value })}
@@ -440,14 +444,14 @@ export default function Home() {
                                 <input
                                     type="tel"
                                     placeholder="Telefon raqamingiz"
-                                    className="w-full bg-black/30 border border-white/10 rounded p-3 text-white focus:border-neon-blue outline-none"
+                                    className="w-full bg-gray-100 dark:bg-black/30 border border-gray-200 dark:border-white/10 rounded p-3 text-gray-900 dark:text-white focus:border-blue-500 dark:focus:border-neon-blue outline-none placeholder-gray-500"
                                     required
                                     value={messageData.phone}
                                     onChange={e => setMessageData({ ...messageData, phone: e.target.value })}
                                 />
                                 <textarea
                                     placeholder="Savolingiz..."
-                                    className="w-full bg-black/30 border border-white/10 rounded p-3 text-white h-24 focus:border-neon-blue outline-none resize-none"
+                                    className="w-full bg-gray-100 dark:bg-black/30 border border-gray-200 dark:border-white/10 rounded p-3 text-gray-900 dark:text-white h-24 focus:border-blue-500 dark:focus:border-neon-blue outline-none resize-none placeholder-gray-500"
                                     value={messageData.text}
                                     onChange={e => setMessageData({ ...messageData, text: e.target.value })}
                                 />
@@ -531,9 +535,9 @@ function ContactCard({ icon, title, value, link, color, shadow }) {
 
 function InfoBox({ label, value }) {
     return (
-        <div className="p-3 bg-white/5 rounded border border-white/5">
-            <span className="block text-gray-500 text-xs mb-1">{label}</span>
-            <span className="font-bold text-white">{value}</span>
+        <div className="p-3 bg-gray-100 dark:bg-white/5 rounded border border-gray-200 dark:border-white/5">
+            <span className="block text-gray-500 dark:text-gray-400 text-xs mb-1">{label}</span>
+            <span className="font-bold text-gray-900 dark:text-white">{value}</span>
         </div>
     );
 }
