@@ -47,8 +47,9 @@ export default function ProductManager() {
 
     const handleSell = async (e) => {
         e.preventDefault();
-        if (!productToSell || sellQty <= 0) return;
-        if (sellQty > (productToSell.quantity || 0)) {
+        const qty = parseInt(sellQty); // Parse to Integer
+        if (!productToSell || qty <= 0) return;
+        if (qty > (productToSell.quantity || 0)) {
             alert(`Xatolik: Omborda buncha mahsulot yo'q! Maksimum: ${productToSell.quantity}`);
             return;
         }
@@ -58,8 +59,8 @@ export default function ProductManager() {
             // 1. Update Product Stock and SoldCount
             const productRef = doc(db, "products", productToSell.id);
             await updateDoc(productRef, {
-                quantity: increment(-sellQty),
-                soldCount: increment(sellQty)
+                quantity: increment(-qty),
+                soldCount: increment(qty)
             });
 
             // 2. Record Sale in 'sales' collection
@@ -67,8 +68,8 @@ export default function ProductManager() {
                 productId: productToSell.id,
                 productName: productToSell.name,
                 category: productToSell.category,
-                quantity: parseInt(sellQty),
-                price: productToSell.price || 0, // Assuming price exists or handled later
+                quantity: qty,
+                price: productToSell.price || 0,
                 date: serverTimestamp()
             });
 
